@@ -1,0 +1,37 @@
+#include<iostream>
+using namespace std;
+int maxVal(int a,int b){
+	return ((a>b)?a:b);
+}
+int crmp(int money[],int cutSet[],int cuttingProcess,int length){
+	int dp[cuttingProcess+1][length+1];
+	for(int l = 0;l<=cuttingProcess;l++){
+		for(int c = 0;c<=length;c++){
+			if(c == 0)dp[l][c] = 0;
+			else if(l == 0 && c !=0 ){
+				dp[l][c] = money[l]*c;
+			}
+			else if(c >= cutSet[l]){
+				dp[l][c] = maxVal(dp[l-1][c],dp[l][c-cutSet[l]]+ money[l]);
+			}
+			else dp[l][c] = dp[l-1][c];
+		}
+	} 
+	for(int x = 0;x<=cuttingProcess;x++){
+		for(int y = 0;y<=length;y++){
+			cout << dp[x][y] << " ";
+		}
+		cout << endl;
+	}
+	return dp[cuttingProcess][length];
+}
+int main(){
+	int cuttingProcess,length;
+	cin >> cuttingProcess >> length;
+	int money[cuttingProcess],cutSet[cuttingProcess];
+	for(int x = 0;x<cuttingProcess;x++){
+		cin >> money[x] >> cutSet[x];
+	}
+	cout << crmp(money,cutSet,cuttingProcess,length);
+	return 0;
+}

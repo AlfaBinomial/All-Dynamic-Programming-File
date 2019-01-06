@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+int max(int a,int b){
+	return ((a>b)?a:b);
+}
+int knapSack_Solution(int items,int totalWeight,vector <int> itemsValue,vector <int>weights){
+	vector<vector <int> >dp(items+1,vector <int>(totalWeight+1));
+	for(int i = 0;i<=items;i++){
+		for(int j = 0;j<=totalWeight;j++){
+			if(i == 0 || j == 0)dp[i][j] = 0;
+			else if (j>=weights[i]){
+				dp[i][j] = max(dp[i-1][j],itemsValue[i] + dp[i-1][j-weights[i]]);
+			}
+			else dp[i][j] = dp[i-1][j];
+		}
+	}
+	for(int i = 0;i<=items;i++){
+		for(int j = 0;j<=totalWeight;j++){
+			cout << dp[i][j] << " ";
+		}
+		cout << endl;
+	}
+	cout << endl;
+	int tw = totalWeight;
+	int res = dp[items][totalWeight];
+	cout << "the weights are : ";
+	for(int i = items;i>0 && res >0;i--){
+		if(res == dp[i-1][tw])continue;
+		else{
+			cout << weights[i] <<" val(" << itemsValue [i] << ")  ";
+			
+			res = res - itemsValue[i];
+			tw  =tw - weights[i];
+		}
+		
+	}
+	return dp[items][totalWeight];
+}
+int main(){
+	int items,totalWeight;
+	cin >> items >> totalWeight;
+	vector <int>itemsValue(items);vector<int>weights(items);
+	for(int i = 0;i<items;i++){
+		cin >> itemsValue[i] >> weights[i];
+		
+	}
+	cout << knapSack_Solution(items,totalWeight,itemsValue,weights);
+	
+	
+	return 0;
+}

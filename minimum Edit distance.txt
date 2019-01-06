@@ -1,0 +1,33 @@
+#include<iostream>
+using namespace std;
+int minVal(int a,int b,int c){
+	if(a>b && a>c)return  a;
+	if(b>a && b >c)return b;
+	if(c>a && c>b)return  c;
+}
+int functionEdit(string str1,string str2){
+	int len1 = str1.length();
+	int len2 = str2.length();
+	int dp[len1+1][len2+1];
+	for(int i = 0;i<=len1;i++){
+		for(int e = 0;e<=len2;e++){
+			if(i == 0)dp[i][e] = e;
+			else if(e == 0)dp[i][e] = i;
+			else if(str1[i] == str2[e])dp[i][e] = dp[i-1][e-1];
+			else dp[i][e] = minVal(dp[i][e-1],dp[i][e-1],dp[i-1][e-1])+1;
+		}
+	}
+	for(int x = 0;x<=len1;x++){
+		for(int y = 0;y<=len2;y++){
+			cout << dp[x][y] << " ";
+		}
+		
+	}
+	return dp[len1][len2];
+}
+int main(){
+	string str1,str2;
+	cin >> str1 >> str2;
+	cout <<" ans :" <<  functionEdit(str1,str2);
+	return 0;
+}

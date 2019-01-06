@@ -1,0 +1,32 @@
+#include<iostream>
+using namespace std;
+int maxValue(int a,int b){return((a>b)?a:b);}
+int knapSackFunction(int val[],int weights[],int item,int bagWeight){
+	int knapsack[item+1][bagWeight+1];
+	for(int i = 0;i<=item;i++){
+		for(int w = 0;w<=bagWeight;w++){
+			if(i == 0 || w == 0)knapsack[i][w] = 0;
+			else if(w>=weights[i]){
+				knapsack[i][w]  = maxValue(val[i]+knapsack[i-1][w-weights[i]],knapsack[i-1][w]);
+			}
+			else knapsack[i][w] = knapsack[i-1][w]; 
+		}
+	}
+	for(int i = 0;i<=item;i++){
+		for(int j = 0;j<=bagWeight;j++){
+			cout << knapsack[i][j] << " ";
+		}
+		cout << endl;
+	}
+	return knapsack[item][bagWeight];
+}
+int main(){// main function 
+	int item,bagWeight;
+	cin >> item >> bagWeight;
+	int val[item],weights[item];
+	for(int x = 0;x<item;x++){
+		cin >> val[x] >> weights[x];
+	}
+	cout << knapSackFunction(val,weights,item,bagWeight);
+	return 0;
+}

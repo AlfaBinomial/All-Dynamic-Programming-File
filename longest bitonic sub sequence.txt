@@ -1,0 +1,60 @@
+#include<iostream>
+using namespace std;
+int max(int a,int b){
+	return((a>b)?a:b);
+}
+int longestIncreasingSequence(int array[],int px[],int len){
+	for(int i = 0;i<len;i++){
+		for(int j = 0;j<i;j++){
+			if(array[i]>array[j])px[i] = max(px[i],px[j]+1);
+		}
+	}
+	int max = 0;
+	for(int i = 0;i<len;i++){
+		if(px[i]>max)max = px[i];
+	}
+	cout << endl;
+	for(int i = 0;i<len;i++)cout << px[i] << " ";
+	cout << endl;
+	return max;
+}
+int revLongestIncreasingSequence(int array[],int gx[],int len){
+	for(int i = len-1;i>=0;i--){
+		for(int j = len-1;j>i;j--){
+			if(array[i]>array[j])gx[i] = max(gx[i],gx[j]+1);
+		}
+	}
+	int max = 0;
+	for(int i = 0;i<len;i++){
+		if(gx[i]>max)max = gx[i];
+	}
+	cout << endl;
+	for(int i = 0;i<len;i++)cout << gx[i] << " ";
+	cout << endl;
+	return max;
+	
+}
+int maxBitonicSequence(int px[],int gx[],int len){
+	int max = 0;
+	for(int i = 0;i<len;i++){
+		int hold = px[i] + gx[i] - 1;
+		if(hold>max)max = hold;
+	}
+	return max;
+}
+int main(){
+	int len;
+	cin >> len;
+	int array[len],px[len],gx[len];
+	for(int i = 0;i<len;i++){
+		cin >> array[i];
+		px[i] = 1;
+		gx[i] = 1;
+	}
+	cout << longestIncreasingSequence(array,px,len);
+	cout << revLongestIncreasingSequence(array,gx,len);
+	cout << endl;
+	cout << "longest bitonic sub sequence length is : ";
+	cout <<  maxBitonicSequence(px,gx,len);
+	return 0;
+}

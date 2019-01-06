@@ -1,0 +1,37 @@
+#include<iostream>
+using namespace std;
+int min(int a,int b){
+	return((a<b)?a:b);
+}
+int coinChanging(int coins[],int len,int totalMoney){
+	int dp[len+1][totalMoney+1];
+	for(int i = 0;i<=len;i++){
+		dp[i][0] = 0;
+	}
+	for(int c = 0;c<=totalMoney;c++){
+		dp[0][c] = c;
+	}
+	for(int i = 1;i<=len;i++){
+		for(int c = 1;c<=totalMoney;c++){
+			if(c>=coins[i-1]){
+				dp[i][c] = min(dp[i-1][c],dp[i][c-coins[i-1]]+1);
+			}
+			else dp[i][c] = dp[i-1][c];
+		}
+	}
+	for(int i = 0;i<=len;i++){
+		for(int c = 0;c<=totalMoney;c++){
+			cout << dp[i][c] << " ";
+		}
+		cout << endl;
+	}
+	return dp[len][totalMoney];
+}
+int main(){
+	int len,totalMoney;
+	cin >> len >> totalMoney;
+	int coins[len];
+	for(int i = 0;i<len;i++)cin >> coins[i];
+	cout << coinChanging(coins,len,totalMoney);
+	return 0;
+}

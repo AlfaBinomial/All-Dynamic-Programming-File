@@ -1,0 +1,27 @@
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+int maxVal(int a,int b){
+	return ((a>b)?a:b);
+}
+int lcs(string str1,string str2){
+	int lengthOfStr1 = str1.length();
+	int lengthOfStr2 = str2.length();
+	int lcsM[lengthOfStr1+1][lengthOfStr2+1];
+	for(int x = 0;x<=lengthOfStr1;x++){
+		for(int y= 0 ;y<=lengthOfStr2;y++){
+			if(x == 0 || y  == 0)lcsM[x][y] = 0;
+			else if(str1[x] == str2[y]){
+				lcsM[x][y]  = lcsM[x-1][y-1] + 1; 
+			}
+			else lcsM[x][y] = maxVal(lcsM[x][y-1],lcsM[x-1][y]);
+		}
+	}
+	return lcsM[lengthOfStr1][lengthOfStr2];
+}
+int main(){
+	string str1,str2;
+	cin >> str1 >> str2;
+	cout << lcs(str1,str2);
+	return 0;
+}

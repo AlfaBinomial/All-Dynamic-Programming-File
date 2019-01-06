@@ -1,0 +1,39 @@
+#include<iostream>
+using namespace std;
+int max(int a,int b){
+	return((a>b)?a:b);
+}
+int maxSumSArray(int ar[],int len){
+	int x = 0,t = 0;
+	for(int i = 0;i<len;i++){
+		x+=ar[i];
+		if(x<0)x = 0;
+		if(x>t)t = x;
+	}
+	return t;
+}
+int negSumSArray(int ar[],int len){
+	int cMax = ar[0],tMax = ar[0];
+	for(int i = 1;i<len;i++){
+		cMax = max(ar[i],cMax+ar[i]);
+		tMax = max(tMax,cMax);
+	}
+	return tMax;
+}
+
+int main(){
+	int len;
+	bool pos = false;
+	cin >> len;
+	int ar[len];
+	for(int i = 0;i<len;i++){
+		cin >> ar[i];
+		if(ar[i]>=0)pos = true;
+	}
+	if(pos == true){
+		cout << maxSumSArray(ar,len);
+		return 0;
+	}
+	cout <<negSumSArray(ar,len);
+	return 0;
+}

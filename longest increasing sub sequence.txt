@@ -1,0 +1,30 @@
+#include<iostream>
+using namespace std;
+int max(int a,int b){
+	return ((a>b)?a:b);
+}
+int maxSubSeq(int array[],int px[],int len){
+	for(int i = 0;i<len;i++){
+		for(int j = 0;j<i;j++){
+			if(array[j]<array[i]){
+				px[i] = max(px[i],px[j]+1);
+			}
+		}
+	}
+	int max = 0;
+	for(int i = 0;i<len;i++){
+		if(px[i]>max)max = px[i];
+	}
+	return max;
+}
+int main(){
+	int len;
+	cin >> len;
+	int array[len],px[len];
+	for(int i = 0;i<len;i++){
+		cin >> array[i];
+		px[i] = 1;
+	}
+	cout <<  maxSubSeq(array,px,len);
+	return 0;
+}

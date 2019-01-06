@@ -1,0 +1,35 @@
+#include<iostream>
+using namespace std;
+#define max 10000
+int dp[max];
+// if there are one friend then the total pair will be one and for two friends total possible pairs are (1),(2) = 1
+// and (1,2) = 1 so ...tottal is = 2
+// 
+void import(){
+	for(int i = 0;i<max;i++){
+		dp[i] = -1;
+	}
+}
+int numberOfPairs(int  friends){
+	if(friends == 1){
+		dp[friends] = 1;
+		return dp[friends];
+	}
+	if(friends == 2){
+		dp[friends] = 2;
+		return dp[friends];
+	}
+	if(dp[friends]!=-1)return dp[friends];
+	else{
+		dp[friends] = numberOfPairs(friends-1) + (friends-1) * numberOfPairs(friends-2);
+		return dp[friends];
+	}
+}
+int main(){
+	import();
+	int friends;
+	cin >> friends;
+	int hold =  numberOfPairs(friends);
+	cout << hold;
+	return 0;
+}

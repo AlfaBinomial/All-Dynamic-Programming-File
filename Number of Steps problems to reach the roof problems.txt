@@ -1,0 +1,25 @@
+#include<iostream>
+using namespace std;
+#define max 10000
+int dp[max];
+void import(){
+	for(int x = 0;x<max;x++)dp[x] = -1;
+}
+int stepsSln(int floor){
+	import();
+	if (floor  == 0 )return floor;
+	if(floor <= 1) return 1;
+	if(dp[floor] != -1){
+		return dp[floor];
+	}
+	if(dp[floor] == -1){
+		dp[floor] = stepsSln(floor-1) + stepsSln(floor-2);
+		return dp[floor];
+	}
+}
+int main(){
+	int floor;
+	cin >> floor;
+	cout << stepsSln(floor);
+	return 0;
+}

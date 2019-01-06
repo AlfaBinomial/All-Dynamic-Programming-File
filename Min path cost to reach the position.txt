@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+#define max_length 100
+int dp[max_length][max_length];
+int array[max_length][max_length];
+void minPathToReach(int row,int colam){
+	dp[0][0] = array[0][0];
+	for(int i = 0;i<row;i++){
+		for(int c = 0;c<colam;c++){
+			if(i == 0 && c!=0)dp[i][c] = dp[i][c-1] + array[i][c];
+			else if(c == 0 && i!=0)dp[i][c] = dp[i-1][c]+array[i][c];
+			else dp[i][c] = min(dp[i-1][c],dp[i][c-1])+array[i][c];
+		}
+	}
+	for(int i = 0;i<row;i++){
+		for(int j = 0;j<colam;j++){
+			cout << dp[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+int main(){
+	int row,colam;
+	int pathx,pathy;
+	cin >> row >> colam;
+	for(int i = 0;i<row;i++){
+		for(int c = 0;c<colam;c++){
+			cin >> array[i][c]; 
+		}
+	}
+	minPathToReach(row,colam);
+	cout << "Enter pathx and pathy ";
+	cin >> pathx >> pathy;
+	cout << " Minimum path cost to reach (x,y) position " <<dp[pathx][pathy];
+	return 0;
+}

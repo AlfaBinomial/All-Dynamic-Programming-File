@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool subSetFunction(int set[], int length,int sum){
+	bool dp[length+1][sum+1];
+	for(int i = 0;i<=length;i++)dp[i][0]= true;
+	for(int s = 1;s<=sum;s++)dp[0][s]= false;
+	for(int i =1;i<=length;i++){
+		for(int s = 1;s<=sum;s++){
+			if(s>=set[i-1]){
+				dp[i][s] = dp[i-1][s] || dp[i-1][s-set[i-1]]; 
+			}
+			else dp[i][s] = dp[i-1][s];
+		}
+	}
+	return dp[length][sum];
+}
+int main(){
+	int length,sum;
+	cin >> length >> sum;
+	int set[length];
+	for(int x = 0;x<length;x++)cin >> set[x];	
+	cout << subSetFunction(set,length,sum);
+	return 0;
+}
